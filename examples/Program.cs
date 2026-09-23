@@ -2,14 +2,15 @@ using ContactInfoWiki.Data;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
+var connectionString = builder.Configuration.GetConnectionString("ContactsDb")
+    ?? "Data Source=contacts.db";
 
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 builder.Services.AddDbContext<ContactsDbContext>(options =>
-    options.UseSqlite(
-        builder.Configuration.GetConnectionString("ContactsDb")));
+    options.UseSqlite(connectionString));
 
 var app = builder.Build();
 

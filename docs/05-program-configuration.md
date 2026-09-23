@@ -13,9 +13,11 @@ Dependency injection means ASP.NET Core creates shared services for you. When yo
 You typically register the database context like this:
 
 ```csharp
+var connectionString = builder.Configuration.GetConnectionString("ContactsDb")
+    ?? "Data Source=contacts.db";
+
 builder.Services.AddDbContext<ContactsDbContext>(options =>
-    options.UseSqlite(
-        builder.Configuration.GetConnectionString("ContactsDb")));
+    options.UseSqlite(connectionString));
 ```
 
 ## Connection strings
@@ -34,4 +36,4 @@ Example `appsettings.json` value:
 
 ## Why `GetConnectionString("ContactsDb")` matters
 
-`builder.Configuration.GetConnectionString("ContactsDb")` reads the named value from configuration so your database location is not hard-coded all over the app.
+`builder.Configuration.GetConnectionString("ContactsDb")` reads the named value from configuration so your database location is not hard-coded all over the app. In a learning example, using a small fallback like `Data Source=contacts.db` also makes it clearer what value the setting is expected to provide.

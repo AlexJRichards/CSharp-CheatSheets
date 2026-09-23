@@ -12,9 +12,20 @@ CRUD means Create, Read, Update, and Delete.
 
 ```csharp
 [HttpGet]
-public async Task<ActionResult<IEnumerable<Contact>>> GetContacts()
+public async Task<ActionResult<IEnumerable<ContactResponse>>> GetContacts()
 {
-    return await _context.Contacts.ToListAsync();
+    var contacts = await _context.Contacts
+        .Select(contact => new ContactResponse
+        {
+            Id = contact.Id,
+            FirstName = contact.FirstName,
+            LastName = contact.LastName,
+            Email = contact.Email,
+            Phone = contact.Phone
+        })
+        .ToListAsync();
+
+    return Ok(contacts);
 }
 ```
 
@@ -42,7 +53,7 @@ Example response JSON:
 
 ```csharp
 [HttpGet("{id}")]
-public async Task<ActionResult<Contact>> GetContact(int id)
+public async Task<ActionResult<ContactResponse>> GetContact(int id)
 {
     var contact = await _context.Contacts.FindAsync(id);
 
@@ -51,7 +62,16 @@ public async Task<ActionResult<Contact>> GetContact(int id)
         return NotFound();
     }
 
-    return contact;
+    var response = new ContactResponse
+    {
+        Id = contact.Id,
+        FirstName = contact.FirstName,
+        LastName = contact.LastName,
+        Email = contact.Email,
+        Phone = contact.Phone
+    };
+
+    return Ok(response);
 }
 ```
 
@@ -88,12 +108,29 @@ Example request JSON:
 
 ```csharp
 [HttpPost]
-public async Task<ActionResult<Contact>> PostContact(Contact contact)
+public async Task<ActionResult<ContactResponse>> PostContact(CreateContactRequest request)
 {
+    var contact = new Contact
+    {
+        FirstName = request.FirstName,
+        LastName = request.LastName,
+        Email = request.Email,
+        Phone = request.Phone
+    };
+
     _context.Contacts.Add(contact);
     await _context.SaveChangesAsync();
 
-    return CreatedAtAction(nameof(GetContact), new { id = contact.Id }, contact);
+    var response = new ContactResponse
+    {
+        Id = contact.Id,
+        FirstName = contact.FirstName,
+        LastName = contact.LastName,
+        Email = contact.Email,
+        Phone = contact.Phone
+    };
+
+    return CreatedAtAction(nameof(GetContact), new { id = contact.Id }, response);
 }
 ```
 
@@ -130,36 +167,27 @@ Example request JSON:
 
 ```csharp
 [HttpPut("{id}")]
-public async Task<IActionResult> PutContact(int id, Contact contact)
+public async Task<IActionResult> PutContact(int id, UpdateContactRequest request)
 {
-    if (id != contact.Id)
-    {
-        return BadRequest();
-    }
-
-    var existingContact = await _context.Contacts.FindAsync(id);
-    if (existingContact is null)
+    var contact = await _context.Contacts.FindAsync(id);
+    if (contact is null)
     {
         return NotFound();
     }
 
-    existingContact.FirstName = contact.FirstName;
-    existingContact.LastName = contact.LastName;
-    existingContact.Email = contact.Email;
-    existingContact.Phone = contact.Phone;
+    contact.FirstName = request.FirstName;
+    contact.LastName = request.LastName;
+    contact.Email = request.Email;
+    contact.Phone = request.Phone;
 
     await _context.SaveChangesAsync();
     return NoContent();
 }
 ```
 
-Example response JSON:
+Example response:
 
-```json
-null
-```
-
-`204 No Content` means the update succeeded and the API does not send a JSON body back.
+No response body is returned for `204 No Content`.
 
 ## DELETE contact
 
@@ -186,12 +214,8 @@ public async Task<IActionResult> DeleteContact(int id)
 }
 ```
 
-Example response JSON:
+Example response:
 
-```json
-null
-```
-
-`204 No Content` means the delete succeeded and the API does not send a JSON body back.
+No response body is returned for `204 No Content`.
 
 For learning, these examples stay small so the request/response patterns are easy to see.

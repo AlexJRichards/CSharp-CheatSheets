@@ -24,6 +24,6 @@ public class ContactsDbContext : DbContext
     {
     }
 
-    public DbSet<Contact> Contacts { get; set; }
+    public DbSet<Contact> Contacts => Set<Contact>();
 }
 ```

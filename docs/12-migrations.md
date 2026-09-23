@@ -22,4 +22,4 @@ With SQLite, your data is commonly stored in a local file such as `contacts.db`.
 
 ## Resetting the local database while learning
 
-When practicing, beginners sometimes delete the SQLite database file and old migrations, then recreate the migration and database. That can be a simple way to start over while learning, even though production projects need more care.
+When practicing, you might delete the SQLite database file and old migrations, then recreate the migration and database. That can be a simple way to start over while learning, even though production projects need more care.

@@ -105,6 +105,6 @@ var contact = new Contact
 };
 ```
 
-## Why beginners should care
+## Why DTOs matter
 
 DTOs may feel like extra work at first, but they make your API easier to understand, validate, and change safely.

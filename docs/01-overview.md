@@ -14,7 +14,7 @@ Entity Framework Core (EF Core) is an object-relational mapper (ORM). It lets yo
 
 ## What is SQLite?
 
-SQLite is a small file-based database. It is popular for beginner projects because you do not need a separate database server to start learning.
+SQLite is a small file-based database. It is useful for learning because you do not need a separate database server to get started.
 
 ## What is Swagger?
 

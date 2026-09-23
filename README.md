@@ -1,6 +1,6 @@
 # ContactInfoWiki
 
-A beginner-friendly wiki and reference guide for learning how an ASP.NET Core Web API fits together with Entity Framework Core, SQLite, DTOs, controllers, and Swagger.
+A wiki and reference guide for learning how an ASP.NET Core Web API fits together with Entity Framework Core, SQLite, DTOs, controllers, and Swagger.
 
 > [!IMPORTANT]
 > This repository is a learning and reference wiki. It is **not** a runnable or production-ready application.
@@ -15,11 +15,11 @@ You can use it to learn:
 - how Entity Framework Core talks to SQLite
 - why DTOs are useful
 - how controllers and endpoints are organized
-- how CRUD patterns work in a beginner-friendly API
+- how CRUD patterns work in a simple API
 - how Swagger helps you test API endpoints
 - how migrations update a database schema
 
-## Quick beginner overview
+## Quick overview
 
 - **ASP.NET Core**: the framework used to build the Web API.
 - **EF Core**: the data-access library that maps C# classes to database tables.
@@ -53,7 +53,7 @@ You can use it to learn:
 - Swagger testing
 - Validation attributes
 - Migrations
-- Common beginner mistakes
+- Common mistakes
 
 ## Documentation index
 
@@ -75,7 +75,7 @@ You can use it to learn:
 - [Examples README](examples/README.md)
 - [API Flow Diagram](diagrams/api-flow.md)
 
-## Beginner-friendly terminology
+## Key terminology
 
 - **Model**: the C# class that represents your app's data.
 - **DbContext**: the EF Core class that connects your app to the database.
